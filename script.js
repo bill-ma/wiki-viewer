@@ -1,10 +1,13 @@
 $(document).ready(function(){
 	$("#articles").hide();
-
+	$(document).keyup(function (e) {
+    if ($(".input:focus") && (e.keyCode === 13)) {
+       getInput();
+    }
+ 	});
 });
 
 function getInput(){
-	$("#articles").show(350);
 	var input = $("#input").val();
     var api = 'https://en.wikipedia.org/w/api.php?format=json&action=query&generator=search&gsrnamespace=0&gsrlimit=5&prop=pageimages|extracts&pilimit=max&exintro&explaintext&exsentences=1&exlimit=max&gsrsearch=';
     var cb = '&callback=JSON_CALLBACK';
@@ -26,8 +29,10 @@ function getInput(){
        			$("#error").html("There are no articles matching: " + input);
        			return 0;
        		}
+       		else{
+       			$("#error").html("");
+       		}	
 
-       		$("#error").html("");
        		var result = res.query.pages;
 
       	 	$.each(result,function(v,k){
@@ -52,6 +57,7 @@ function getInput(){
 	      		}
 	      		console.log(wikiResults.thumbnail[i-1]);
 	       	}
+	       	$("#articles").show(300);
 	    },
 	    error: function(e) {
 	       console.log(e.message);
