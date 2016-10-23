@@ -1,5 +1,6 @@
 $(document).ready(function(){
 	$("#articles").hide();
+	$("#error").hide();
 	$(document).keyup(function (e) {
     if ($(".input:focus") && (e.keyCode === 13)) {
        getInput();
@@ -27,10 +28,11 @@ function getInput(){
 	    success: function(res) {
        		if(res.query === undefined){
        			$("#error").html("There are no articles matching: " + input);
+       			$("#error").show();
        			return 0;
        		}
        		else{
-       			$("#error").html("");
+       			$("#error").hide();
        		}	
 
        		var result = res.query.pages;
